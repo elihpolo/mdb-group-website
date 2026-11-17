@@ -1,0 +1,104 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-ink: #0a1016;
+  --color-ink-2: #0e1720;
+  --color-navy: #13314a;
+  --color-steel: #294a61;
+  --color-slate: #50636f;
+  --color-mist: #9faeb7;
+  --color-fog: #dbdfe2;
+  --color-brand: #29442a; /* official MDB Group green */
+
+  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-sans: 'Archivo', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+  body {
+    @apply bg-ink text-fog font-sans antialiased;
+  }
+  ::selection {
+    background: var(--color-brand);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-fog);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  /* Color grade that pulls every photo into the navy/steel palette */
+  .photo-grade {
+    filter: grayscale(0.85) contrast(1.08) brightness(0.72);
+    transition: filter 0.8s ease, transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .group:hover .photo-grade-hover {
+    filter: grayscale(0.4) contrast(1.05) brightness(0.85);
+    transform: scale(1.04);
+  }
+  .photo-tint {
+    background: linear-gradient(180deg, rgba(19, 49, 74, 0.35), rgba(10, 16, 22, 0.55));
+    mix-blend-mode: multiply;
+  }
+
+  /* Faint technical grid used behind data panels */
+  .tech-grid {
+    background-image:
+      linear-gradient(rgba(219, 223, 226, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(219, 223, 226, 0.045) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+
+  /* Corner brackets for "technical" cards */
+  .brackets {
+    position: relative;
+  }
+  .brackets::before,
+  .brackets::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: rgba(219, 223, 226, 0.35);
+    transition: all 0.4s ease;
+    pointer-events: none;
+  }
+  .brackets::before {
+    top: -1px;
+    left: -1px;
+    border-top-width: 1px;
+    border-left-width: 1px;
+  }
+  .brackets::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+  }
+  .brackets:hover::before,
+  .brackets:hover::after {
+    width: 28px;
+    height: 28px;
+    border-color: #fff;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
